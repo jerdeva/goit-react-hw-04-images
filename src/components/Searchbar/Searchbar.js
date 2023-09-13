@@ -4,6 +4,9 @@ import { Wrapper } from './Searchbar.styled';
 import { InputArea } from './Searchbar.styled';
 
 export class Searchbar extends Component {
+
+
+
   state = {
     query: '',
   };

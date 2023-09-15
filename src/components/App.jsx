@@ -8,21 +8,21 @@ import { Loader } from './Loader/Loader'
 import {  useEffect, useState } from "react";
 
 export const App = () => {
-    const [query, setQuery] = useState('');
-    const [images, setImages] = useState([]);
-    const [page, setPage] = useState(1);
-    const [per_page, setPer_page] = useState(12);
-    const [loadMore, setLoadMore] = useState(false);
-    const [modal, setModal] = useState(false);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const per_page = 12;
+  const [query, setQuery] = useState('');
+  const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
+    // const [per_page, setPer_page] = useState(12);
+  const [loadMore, setLoadMore] = useState(false);
+  // const [modal, setModal] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (!query) {return};
     const getImages = async (query, page) => {
-    if (!query) {
-      return;
-    }
-    try {
+      setLoading(true);
+      try {
       const { hits, totalHits } = await fetchImages(query, page);
         if (!hits.length) {
           setLoadMore(false)
@@ -32,7 +32,7 @@ export const App = () => {
             setLoadMore( page < Math.ceil(totalHits / per_page))
         }
     } catch (error) {
-        console.log(error)
+        alert(error)
         setError(true)
     } finally {
         setLoading(false)
@@ -40,14 +40,18 @@ export const App = () => {
 
     }
     getImages();
-  }, [page, query, per_page]);
+  }, [page, query]);
+
+  
 
 
 
-  const  handleSubmit = (que) => {
+  const onSubmit = (que) => {
+    if (que !== query) {
       setQuery(`${que}`);
       setImages([]);
       setPage(1);
+    }
   };
     
     
@@ -55,25 +59,23 @@ export const App = () => {
       setPage((prevItems) => (prevItems + 1 ));
     };
 
-  const toggleModal = id => {
-    setModal(!modal, id );
-   };
+  // const toggleModal = id => {
+  //   setModal(!modal, id );
+  //  };
   
-  const  closeModal = () => {
-    setModal(!modal );
-  };
+  // const  closeModal = () => {
+  //   setModal(!modal );
+  // };
 
     
 
     return (
                 <div>
            {loading && <Loader/>}
-          <Searchbar handleSubmit={handleSubmit} />
+          <Searchbar onSubmit={onSubmit} />
           {loading && <Loader/>}
-          {error && !loading &&
-            
-            <div>OOPS! ERROR!</div>}
-          < ImageGallery
+          {error && !loading && <div>OOPS! ERROR!</div>}
+        < ImageGallery
             images={images}
           />
            {loading && <Loader/>}

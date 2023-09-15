@@ -2,7 +2,7 @@ import { Audio } from 'react-loader-spinner';
 
 export const Loader = () => {
     return (
-      <div>
+      <div >
         <Audio
           height="80"
           width="80"
@@ -11,6 +11,8 @@ export const Loader = () => {
           ariaLabel="loading"
           wrapperStyle
           wrapperClass
+          // className="true"
+          
         />
         ;
       </div>

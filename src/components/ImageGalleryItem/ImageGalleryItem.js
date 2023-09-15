@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {  useState } from 'react';
 // import Modal from 'components/Modal/Modal';
 import Modal from 'react-modal';
 
@@ -12,41 +12,72 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     background: 'none',
-    border: 'none'
+    border: 'none',
   },
 };
 
-class ImageGalleryItem extends Component {
-  state = {
-    modalIsopen: false,
-  };
+// class ImageGalleryItem extends Component {
+//   state = {
+//     modalIsopen: false,
+//   };
 
-  openModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
+//   openModal = () => {
+//     this.setState({ modalIsOpen: true });
+//   };
 
-  closeModal = () => {
-    this.setState({ modalIsOpen: false });
-  };
+//   closeModal = () => {
+//     this.setState({ modalIsOpen: false });
+//   };
 
-  render() {
-    const { src, largeImageURL, alt, id } = this.props;
+//   render() {
+//     const { src, largeImageURL, alt, id } = this.props;
 
-    return (
-      <>
-        <li key={id} onClick={this.openModal}>
-          <img src={src} alt={alt} width={500} height={300} />
-        </li>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-        >
-          <img src={largeImageURL} alt={alt} width={800} height={500} />
-        </Modal>
-      </>
-    );
-  }
-}
+//     return (
+//       <>
+//         <li key={id} onClick={this.openModal}>
+//           <img src={src} alt={alt} width={500} height={300} />
+//         </li>
+//         <Modal
+//           isOpen={this.state.modalIsOpen}
+//           onRequestClose={this.closeModal}
+//           style={customStyles}
+//         >
+//           <img src={largeImageURL} alt={alt} width={800} height={500} />
+//         </Modal>
+//       </>
+//     );
+//   }
+// }
 
-export default ImageGalleryItem;
+
+ const ImageGalleryItem = ({ src, largeImageURL, alt, id }) => {
+   const [modalIsopen, setModalIsopen] = useState(false);
+
+   const openModal = () => {
+     setModalIsopen(true);
+   };
+
+   const closeModal = () => {
+     setModalIsopen(false);
+   };
+
+   // const {src, largeImageURL, alt, id } = this.props
+
+   return (
+     <>
+       <li id={id} onClick={openModal}>
+         <img src={src} alt={alt} width={500} height={300} />
+       </li>
+       <Modal
+         isOpen={modalIsopen}
+         onRequestClose={closeModal}
+         style={customStyles}
+       >
+         <img src={largeImageURL} alt={alt} width={800} height={500} />
+       </Modal>
+     </>
+   );
+ };
+
+ export default ImageGalleryItem;
+

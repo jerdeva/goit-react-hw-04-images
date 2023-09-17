@@ -14,13 +14,15 @@ export const App = () => {
   const [page, setPage] = useState(1);
     // const [per_page, setPer_page] = useState(12);
   const [loadMore, setLoadMore] = useState(false);
-  // const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!query) {return};
-    const getImages = async (query, page) => {
+    if (!query)
+    { return };
+    // const getImages =
+      async function getImages () {
       setLoading(true);
       try {
       const { hits, totalHits } = await fetchImages(query, page);
@@ -46,12 +48,13 @@ export const App = () => {
 
 
 
-  const onSubmit = (que) => {
+  function onSubmit (que) {
     if (que !== query) {
       setQuery(`${que}`);
       setImages([]);
       setPage(1);
     }
+
   };
     
     
@@ -59,9 +62,9 @@ export const App = () => {
       setPage((prevItems) => (prevItems + 1 ));
     };
 
-  // const toggleModal = id => {
-  //   setModal(!modal, id );
-  //  };
+  const toggleModal = id => {
+    setModal(!modal, id );
+   };
   
   // const  closeModal = () => {
   //   setModal(!modal );
@@ -76,7 +79,7 @@ export const App = () => {
           {loading && <Loader/>}
           {error && !loading && <div>OOPS! ERROR!</div>}
         < ImageGallery
-            images={images}
+            images={images} key={images.id} onClick={toggleModal}
           />
            {loading && <Loader/>}
           {loadMore && <ButtonLoadMore onloadMore={loadMorePage} />}
